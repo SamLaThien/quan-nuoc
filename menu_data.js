@@ -279,7 +279,7 @@ const shopsData = {
                     { name: "Thêm sữa", price: 5000 }, { name: "Thêm sầu riêng", price: 10000 },
                     { name: "Thêm trân châu", price: 5000 }, { name: "Thêm trái cây", price: 5000 }
                 ]
-            }
+            },
              'shop6': {
         name: 'SOLI TEA',
         phone: '0702908585', // Số lấy từ hình ảnh
