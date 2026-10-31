@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quản Lý Menu</title>
+    <title>Menu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
@@ -89,14 +89,14 @@
         background: var(--zalo);
         color: white;
         border: none;
-        padding: 6px 10px;
-        border-radius: 15px;
-        font-size: 11px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
         font-weight: 700;
         cursor: pointer;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
         box-shadow: 0 2px 5px rgba(0, 104, 255, 0.3);
     }
     .btn-zalo:active { transform: scale(0.95); }
@@ -372,7 +372,6 @@
         justify-content: flex-end;
         align-items: center;
         gap: 8px;
-        margin-bottom: 12px;
         cursor: pointer;
     }
     .toggle-price-container label {
@@ -401,22 +400,11 @@
 <body>
 
     <!-- Tab Chọn Quán sẽ được tạo TỰ ĐỘNG ở đây -->
-    <div class="shop-selector" id="shop-tabs">
-        <!-- JS sẽ đọc file menu_data.js và nhúng nút bấm vào đây -->
-    </div>
+    <div class="shop-selector" id="shop-tabs"></div>
 
     <div class="menu-section">
         <div class="menu-header-bar">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <h3 id="shop-title" style="color: #475569; font-size: 16px; font-weight:bold;">Menu Quán</h3>
-                <button id="btn-zalo" class="btn-zalo" onclick="contactZalo()" style="display: none;">
-                    <!-- Icon Zalo SVG -->
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21.384 10.32c-.18-3.96-3.792-7.2-8.388-7.2-4.86 0-8.82 3.42-8.82 7.62 0 2.22 1.08 4.2 2.82 5.58-.24 1.2-1.02 3.6-1.08 3.78-.06.24.12.36.3.3.42-.12 3.48-1.5 4.86-2.1 1.02.3 2.1.48 3.24.48 4.86 0 8.82-3.42 8.82-7.62 0-.24-.06-.54-.06-.84zM11.34 11.7l-2.04-3.18c-.18-.24-.36-.3-.6-.3h-1.2c-.3 0-.48.18-.48.42v4.8c0 .24.18.42.42.42h.84c.24 0 .42-.18.42-.42v-2.7l1.98 3c.18.24.42.3.6.3h1.2c.3 0 .48-.18.48-.42v-4.8c0-.24-.18-.42-.42-.42h-.84c-.24 0-.42.18-.42.42v2.88zm3.24 1.32c0 .24-.18.42-.42.42h-2.1c-.24 0-.42-.18-.42-.42v-.84c0-.24.18-.42.42-.42h1.68v-.72h-1.68c-.24 0-.42-.18-.42-.42v-.84c0-.24.18-.42.42-.42h2.1c.24 0 .42.18.42.42v.72c0 .24-.18.42-.42.42h-1.68v.6h1.68c.24 0 .42.18.42.42v.66zm3.3.42c-.24 0-.42-.18-.42-.42v-4.8c0-.24.18-.42.42-.42h.84c.24 0 .42.18.42.42v3.9h1.32c.24 0 .42.18.42.42v.9h-2.16z" fill="#fff"/>
-                    </svg>
-                    Zalo
-                </button>
-            </div>
+            <h3 id="shop-title" style="color: #475569; font-size: 16px; font-weight:bold;">Menu Quán</h3>
             <button class="btn-add-custom" onclick="addCustomItem()">+ MÓN NGOÀI</button>
         </div>
         
@@ -457,9 +445,20 @@
                     </div>
                 </div>
                 
-                <div class="toggle-price-container">
-                    <label for="toggle-print-price">Hiện giá</label>
-                    <input type="checkbox" id="toggle-print-price">
+                <!-- HÀNG CHỨA NÚT ZALO VÀ TICK IN GIÁ -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <!-- Nút Zalo đã được chuyển xuống đây -->
+                    <button id="btn-zalo" class="btn-zalo" onclick="contactZalo()" style="display: none;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.384 10.32c-.18-3.96-3.792-7.2-8.388-7.2-4.86 0-8.82 3.42-8.82 7.62 0 2.22 1.08 4.2 2.82 5.58-.24 1.2-1.02 3.6-1.08 3.78-.06.24.12.36.3.3.42-.12 3.48-1.5 4.86-2.1 1.02.3 2.1.48 3.24.48 4.86 0 8.82-3.42 8.82-7.62 0-.24-.06-.54-.06-.84zM11.34 11.7l-2.04-3.18c-.18-.24-.36-.3-.6-.3h-1.2c-.3 0-.48.18-.48.42v4.8c0 .24.18.42.42.42h.84c.24 0 .42-.18.42-.42v-2.7l1.98 3c.18.24.42.3.6.3h1.2c.3 0 .48-.18.48-.42v-4.8c0-.24-.18-.42-.42-.42h-.84c-.24 0-.42.18-.42.42v2.88zm3.24 1.32c0 .24-.18.42-.42.42h-2.1c-.24 0-.42-.18-.42-.42v-.84c0-.24.18-.42.42-.42h1.68v-.72h-1.68c-.24 0-.42-.18-.42-.42v-.84c0-.24.18-.42.42-.42h2.1c.24 0 .42.18.42.42v.72c0 .24-.18.42-.42.42h-1.68v.6h1.68c.24 0 .42.18.42.42v.66zm3.3.42c-.24 0-.42-.18-.42-.42v-4.8c0-.24.18-.42.42-.42h.84c.24 0 .42.18.42.42v3.9h1.32c.24 0 .42.18.42.42v.9h-2.16z" fill="#fff"/>
+                        </svg>
+                        Gửi bill
+                    </button>
+
+                    <div class="toggle-price-container">
+                        <label for="toggle-print-price">Hiện giá</label>
+                        <input type="checkbox" id="toggle-print-price">
+                    </div>
                 </div>
 
                 <div class="btn-group">
@@ -484,7 +483,6 @@
     </div>
 
     <!-- 1. GỌI FILE DỮ LIỆU MENU TỪ NGOÀI VÀO -->
-    <!-- CHÚ Ý: Đảm bảo file menu_data.js nằm chung thư mục với file index.html này -->
     <script src="menu_data.js"></script>
 
     <!-- 2. PHẦN XỬ LÝ LOGIC CỦA APP -->
@@ -498,7 +496,7 @@
         // --- HÀM TẠO NÚT TAB TỰ ĐỘNG TỪ menu_data.js ---
         function renderShopTabs() {
             const tabsContainer = document.getElementById('shop-tabs');
-            tabsContainer.innerHTML = ''; // Làm sạch bộ chứa trước khi tạo
+            tabsContainer.innerHTML = ''; 
             
             for (let shopId in shopsData) {
                 const shop = shopsData[shopId];
@@ -506,7 +504,7 @@
                 const btn = document.createElement('button');
                 btn.id = 'btn-' + shopId;
                 btn.className = 'shop-btn';
-                btn.innerText = shop.name; // Tự động lấy tên quán làm tên nút
+                btn.innerText = shop.name; 
                 btn.onclick = () => switchShop(shopId);
                 
                 tabsContainer.appendChild(btn);
@@ -536,7 +534,6 @@
             const activeBtn = document.getElementById('btn-' + shopId);
             if(activeBtn) {
                 activeBtn.classList.add('active');
-                // Cuộn nút đang chọn ra giữa màn hình (nếu bị lấp)
                 activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
 
@@ -548,7 +545,7 @@
                 btnZalo.style.display = 'flex';
                 btnZalo.setAttribute('data-phone', shop.phone);
             } else {
-                btnZalo.style.display = 'none'; // Ẩn nếu quán không có số đt
+                btnZalo.style.display = 'none'; 
                 btnZalo.removeAttribute('data-phone');
             }
 
@@ -886,18 +883,12 @@
         }
 
         // --- KHỞI CHẠY APP ---
-        // 1. Dùng timeout nhẹ để đảm bảo file menu_data.js đã load xong
         setTimeout(() => {
-            // 2. Tạo nút Tab dựa trên dữ liệu menu
             renderShopTabs();
-
-            // 3. Đọc lại quán vừa truy cập, nếu không có thì mặc định lấy quán đầu tiên (của object keys)
             let savedShop = localStorage.getItem(LAST_SHOP_KEY);
             if (!savedShop || !shopsData[savedShop]) {
-                savedShop = Object.keys(shopsData)[0]; // Tự động lấy ID quán đầu tiên trong danh sách
+                savedShop = Object.keys(shopsData)[0]; 
             }
-            
-            // 4. Mở quán đó lên
             switchShop(savedShop); 
         }, 50);
 
