@@ -1,6 +1,6 @@
 const shopsData = {
             'shop1': {
-                name: 'Tuyền 1Bé',
+                name: 'Tuyền Bé',
                 phone: '0382838382', // Tạm gán số trên cùng
                 storageKey: 'tra_sua_cart_q1', 
                 menu: {
