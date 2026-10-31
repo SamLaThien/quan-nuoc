@@ -70,7 +70,7 @@ const shopsData = {
             },
             
             'shop2': {
-                name: 'Menu Quạo',
+                name: 'Quạo',
                 phone: '0349918653', // Tên Tuyết trong ảnh
                 storageKey: 'quao_house_cart_q2', 
                 menu: {
@@ -136,7 +136,7 @@ const shopsData = {
             },
 
             'shop3': {
-                name: 'Menu 2 Lư',
+                name: '2 Lư',
                 phone: '0976967213', // Để trống nếu không có số Zalo
                 storageKey: 'menu_2_lu_cart_q3', 
                 menu: {
@@ -200,7 +200,7 @@ const shopsData = {
             },
 
             'shop4': {
-                name: 'TiệChè Ý ƠI',
+                name: 'Chè Ý ƠI',
                 phone: '0789529067', // Ký hiệu Y trong ảnh
                 storageKey: 'che_y_oi_cart_q4', 
                 menu: {
@@ -237,7 +237,7 @@ const shopsData = {
             },
 
             'shop5': {
-                name: 'Quán Doremon',
+                name: 'Doremon',
                 phone: '0782886599', // Tên Doremon trong ảnh
                 storageKey: 'doremon_cart_q5', 
                 menu: {
