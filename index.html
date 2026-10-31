@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quản Lý Menu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+    :root { 
+        --primary: #4CAF50; 
+        --accent: #e67e22; 
+        --bg: #f4f7f6;
+        --text: #2d3436;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    html {
+        height: auto !important;
+        overflow: auto !important;
+    }
+
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+        background-color: var(--bg);
+        color: var(--text);
+        height: auto !important;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: auto !important;
+    }
+
+    /* CSS Cho Tab Chọn Quán */
+    .shop-selector {
+        display: flex;
+        gap: 10px;
+        padding: 12px 12px 0 12px;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .shop-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 12px;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        text-transform: uppercase;
+        box-shadow: inset 0 0 0 1px #e2e8f0;
+    }
+    
+    .shop-btn.active {
+        background: linear-gradient(135deg, var(--primary), #45a049);
+        color: white;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .menu-section { 
+        flex: 1; 
+        display: flex; 
+        flex-direction: column; 
+        padding: 12px; 
+        overflow: visible;
+        margin: 10px;
+    }
+
+    .menu-header-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        flex-shrink: 0;
+    }
+    
+    .btn-add-custom { 
+        background: #6c5ce7; 
+        color: white; 
+        border: none; 
+        padding: 8px 14px; 
+        border-radius: 20px; 
+        font-size: 12px; 
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .menu-scroll-container {
+        flex-grow: 1;
+        overflow-y: visible;
+        padding-bottom: 80px;
+    }
+
+    .items-grid { 
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 14px; 
+    }
+
+    .category-group-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, #2d3436, #636e72) !important; 
+        padding: 8px 18px;
+        margin: 24px 0 12px 0;
+        border-radius: 25px;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .category-group:first-child .category-group-title { margin-top: 0; }
+
+    .item-card { 
+        background: #ffffff !important; 
+        padding: 18px 12px; 
+        border-radius: 16px; 
+        text-align: center; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
+        transition: all 0.25s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #f1f5f9;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .item-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981, #3b82f6); 
+        opacity: 0.8;
+    }
+
+    .item-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+        border-color: #e2e8f0;
+    }
+    .item-card:active { 
+        transform: scale(0.96); 
+    }
+    
+    .item-card h4 { 
+        font-size: 14.5px; 
+        font-weight: 700;
+        min-height: 42px;
+        margin-top: 6px;
+        margin-bottom: 14px; 
+        color: #1e293b; 
+        background: transparent; 
+        padding: 0;
+        box-shadow: none;
+        display: -webkit-box; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical; 
+        width: 100%; 
+        line-height: 1.45;
+    }
+
+    .item-card b { 
+        color: #ffffff; 
+        font-size: 14px; 
+        font-weight: 800;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b); 
+        padding: 6px 16px;
+        border-radius: 20px;
+        box-shadow: 0 4px 10px rgba(255, 126, 95, 0.35); 
+        letter-spacing: 0.5px;
+    }
+
+    .cart-fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        z-index: 99;
+        border: none;
+        cursor: pointer;
+    }
+    .cart-fab svg { width: 28px; height: 28px; fill: white; }
+    .cart-badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        background: #ff7675;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: flex-end;
+        z-index: 100;
+    }
+    .modal-overlay.open { display: flex; }
+    
+    .modal-content {
+        background: white;
+        width: 100%;
+        max-width: 500px;
+        height: 95dvh; 
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        animation: slideUp 0.2s ease-out;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    #topping-modal .modal-content {
+        height: auto;
+        max-height: 75dvh;
+        margin: auto 15px;
+        border-radius: 20px;
+    }
+
+    .modal-header {
+        padding: 14px 16px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fafafa;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        flex-shrink: 0;
+    }
+    .modal-header h3 { font-size: 17px; color: #334155; }
+    .btn-close-modal { background: none; border: none; font-size: 26px; color: #94a3b8; cursor: pointer; padding: 0 10px; }
+
+    #bill-container { flex: 1; overflow-y: auto; background: white; }
+    .order-list { padding: 5px 12px; }
+    
+    .order-item { padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+    .item-main-row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .item-info { flex: 1; display: flex; flex-direction: column; padding-right: 8px; overflow: hidden; }
+    
+    .item-name-title { font-size: 14px; font-weight: bold; color: #1e293b; display: block; margin-bottom: 3px; word-break: break-word; }
+
+    .action-buttons-row { 
+        display: flex; 
+        align-items: center; 
+        gap: 4px; 
+        margin: 2px 0; 
+        flex-wrap: nowrap; 
+        overflow-x: auto; 
+    }
+    
+    .action-buttons-row::-webkit-scrollbar { display: none; }
+
+    .btn-add-top { background: #3498db; color: white; border: none; padding: 4px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+    .btn-user-tag { background: #e67e22; color: white; border: none; padding: 4px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+    
+    .paid-checkbox-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 3px 6px;
+        border-radius: 4px;
+        transition: all 0.2s;
+        user-select: none;
+        white-space: nowrap; 
+        flex-shrink: 0;
+    }
+    .paid-checkbox-label.paid { color: #27ae60; border: 1px solid #27ae60; background: #e8f8f5; }
+    .paid-checkbox-label.unpaid { color: #94a3b8; border: 1px solid #cbd5e1; background: #fff; }
+
+    .sub-info-row { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+    .static-price { font-size: 12px; color: #64748b; font-weight: 500; }
+
+    .note-input { border: none; border-bottom: 1px dashed #e67e22; padding: 2px 4px; font-size: 12px; outline: none; background: transparent; color: #e67e22; width: 110px; font-style: italic; }
+    .note-input::placeholder { color: #cbd5e1; font-style: normal; }
+    
+    .note-display-line { font-size: 12px; color: #e67e22; margin-top: 2px; font-weight: bold; }
+    .topping-line { font-size: 12px; color: #64748b; margin-top: 3px; font-style: italic; }
+    .topping-bold-text { color: var(--accent); font-weight: 600; font-style: normal; }
+    .user-tag-line { font-size: 12px; color: #2d3436; margin-top: 3px; font-weight: bold; }
+    .user-tag-name { color: #0984e3; }
+
+    .qty-controls { display: flex; align-items: center; gap: 8px; margin: 0 4px; flex-shrink: 0; }
+    .btn-qty { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #cbd5e1; background: #fff; font-weight: bold; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    
+    .item-total-price-box { 
+        width: 75px; 
+        text-align: right; 
+        font-size: 14px; 
+        font-weight: bold; 
+        color: #0984e3; 
+        padding: 4px 6px; 
+        cursor: pointer;
+        border-radius: 6px;
+        background: #f1f5f9;
+        transition: 0.1s;
+    }
+    .item-total-price-box:hover { background: #e2e8f0; }
+    .item-total-price-box:active { transform: scale(0.95); }
+
+    .total-area { padding: 14px 16px; border-top: 2px solid #f1f5f9; background: #fafafa; flex-shrink: 0; }
+    
+    .total-summary { margin-bottom: 12px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; color: #64748b; font-weight: 600; }
+    .summary-row.paid-row { color: #27ae60; }
+    .summary-row.remain-row { font-size: 19px; font-weight: bold; color: #1e293b; margin-top: 8px; border-top: 1px dashed #cbd5e1; padding-top: 8px; }
+    
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-clear { background: #ff7675; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; }
+    .btn-download { background: #0984e3; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; }
+
+    .topping-option-row { display: flex; justify-content: space-between; padding: 14px 5px; border-bottom: 1px solid #edf2f7; font-size: 16px; }
+    .topping-option-row label { display: flex; align-items: center; gap: 10px; width: 100%; cursor: pointer; }
+    .topping-option-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); }
+
+    .toggle-price-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    .toggle-price-container label {
+        font-size: 13px;
+        font-weight: bold;
+        color: #475569;
+        cursor: pointer;
+        user-select: none;
+    }
+    .toggle-price-container input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+        .modal-overlay { align-items: center; }
+        .modal-content { width: 450px; height: 85dvh; border-radius: 20px; }
+        #topping-modal .modal-content { width: 380px; height: auto; }
+        .modal-header { border-radius: 20px 20px 0 0; }
+    }
+</style>
+
+</head>
+<body>
+
+    <!-- Tab Chọn Quán -->
+    <div class="shop-selector">
+        <button id="btn-shop1" class="shop-btn active" onclick="switchShop('shop1')">QUÁN 1</button>
+        <button id="btn-shop2" class="shop-btn" onclick="switchShop('shop2')">MENU QUẠO</button>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-header-bar">
+            <h3 id="shop-title" style="color: #475569; font-size: 16px; font-weight:bold;">Menu Quán</h3>
+            <button class="btn-add-custom" onclick="addCustomItem()">+ MÓN NGOÀI</button>
+        </div>
+        
+        <div class="menu-scroll-container" id="menu-scroll-view"></div>
+    </div>
+
+    <button class="cart-fab" onclick="toggleBillModal(true)">
+        <svg viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        <div class="cart-badge" id="cart-badge">0</div>
+    </button>
+
+    <div class="modal-overlay" id="bill-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chi tiết đơn hàng</h3>
+                <button class="btn-close-modal" onclick="toggleBillModal(false)">&times;</button>
+            </div>
+            
+            <div id="bill-container">
+                <div class="order-list" id="order-list"></div>
+            </div>
+
+            <div class="total-area">
+                <div class="total-summary">
+                    <div class="summary-row">
+                        <span>Tổng tiền:</span>
+                        <span id="total-price">0đ</span>
+                    </div>
+                    <div class="summary-row paid-row" id="total-paid-row" style="display: none;">
+                        <span>Đã thu:</span>
+                        <span id="total-paid">0đ</span>
+                    </div>
+                    <div class="summary-row remain-row">
+                        <span>CẦN THU:</span>
+                        <span id="total-remain" style="color:var(--accent)">0đ</span>
+                    </div>
+                </div>
+                
+                <div class="toggle-price-container">
+                    <label for="toggle-print-price">Hiện giá</label>
+                    <input type="checkbox" id="toggle-print-price">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-clear" onclick="clearAll()">XÓA HẾT</button>
+                    <button class="btn-download" onclick="downloadFullBill()">TẢI ẢNH BILL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="topping-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="topping-modal-title">Tùy chỉnh Topping</h3>
+                <button class="btn-close-modal" onclick="closeToppingModal()">&times;</button>
+            </div>
+            <div id="topping-options-list" style="padding: 10px 20px; overflow-y:auto; flex:1;"></div>
+            <div style="padding:15px; background:#fafafa; border-top:1px solid #eee;">
+                <button class="btn-clear" style="margin:0; width:100%; background:var(--primary);" onclick="closeToppingModal()">HOÀN THÀNH</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DỮ LIỆU CỦA 2 QUÁN ---
+        const shopsData = {
+            'shop1': {
+                name: 'Menu Quán 1',
+                storageKey: 'tra_sua_cart',
+                menu: {
+                    "TRÀ SỮA SỐT MÔN": [
+                        {name: "Trà sữa sốt khoai môn", price: 33000},
+                        {name: "Olong sốt môn", price: 33000},
+                        {name: "Gạo rang sốt môn", price: 33000},
+                        {name: "Khoai môn sốt môn", price: 33000},
+                        {name: "Sữa tươi trân châu đường đen (500ml)", price: 20000},
+                        {name: "Sữa tươi trân châu đường đen (700ml)", price: 25000},
+                        {name: "Sữa tươi kem mặn (700ml)", price: 30000}
+                    ],
+                    "TRÀ SỮA THÁI LAN": [
+                        {name: "Thái xanh", price: 28000},
+                        {name: "Thái đỏ", price: 30000}
+                    ],
+                    "TRÀ SỮA ĐẬM TRÀ": [
+                        {name: "Trà sữa Olong", price: 30000},
+                        {name: "Trà sữa Gạo Rang", price: 30000},
+                        {name: "Trà sữa Matcha Đặc Biệt", price: 30000},
+                        {name: "Trà sữa Cacao Đặc Biệt", price: 30000}
+                    ],
+                    "TRÀ SỮA MIX VỊ": [
+                        {name: "Trà sữa truyền thống", price: 25000},
+                        {name: "Trà sữa socola", price: 25000},
+                        {name: "Trà sữa matcha", price: 25000},
+                        {name: "Trà sữa mix các vị", price: 25000},
+                        {name: "Trà sữa khoai môn", price: 28000},
+                        {name: "Trà sữa nướng", price: 30000}
+                    ],
+                    "ĐÁ XAY": [
+                        {name: "Matcha đá xay (500ml)", price: 27000},
+                        {name: "Matcha đá xay (700ml)", price: 33000},
+                        {name: "Cacao đá xay (500ml)", price: 27000},
+                        {name: "Cacao đá xay (700ml)", price: 33000}
+                    ],
+                    "MỚI (SIZE 1 LÍT)": [
+                        {name: "Sâm long nhãn", price: 30000},
+                        {name: "Sâm long nhãn hạt sen", price: 35000},
+                        {name: "Lục trà long nhãn", price: 30000},
+                        {name: "Lục trà sen long nhãn", price: 35000},
+                        {name: "Trà sữa Olong nhãn (700ml)", price: 30000},
+                        {name: "Trà sữa Olong nhãn sen (700ml)", price: 35000}
+                    ],
+                    "TRÀ TRÁI CÂY (SIZE 1 LÍT)": [
+                        {name: "Trà trái cây", price: 28000}, {name: "Trà mãng cầu", price: 30000},
+                        {name: "Trà thơm đác", price: 28000}, {name: "Trà dưa lưới", price: 28000},
+                        {name: "Trà dâu tằm", price: 28000}, {name: "Trà dâu tươi", price: 25000},
+                        {name: "Trà vải", price: 25000}, {name: "Trà ổi hồng", price: 25000},
+                        {name: "Trà kiwi", price: 25000}, {name: "Trà việt quất đác", price: 25000},
+                        {name: "Trà nho đác", price: 25000}, {name: "Trà chanh dây đác rim", price: 25000},
+                        {name: "Trà xoài", price: 25000}, {name: "Trà đào", price: 25000}
+                    ],
+                    "LATTE": [
+                        {name: "Matcha Latte (700ml)", price: 25000}, {name: "Matcha Latte (1 Lít)", price: 30000},
+                        {name: "Cacao Latte (700ml)", price: 25000}, {name: "Khoai môn Latte (700ml)", price: 25000},
+                        {name: "Matcha Dâu", price: 25000}, {name: "Matcha Việt Quất", price: 25000},
+                        {name: "Xoài Matcha", price: 25000}
+                    ],
+                    "SINH TỐ": [
+                        {name: "Sinh tố dâu", price: 30000}, {name: "Sinh tố mãng cầu", price: 28000},
+                        {name: "Sinh tố nho", price: 25000}, {name: "Sinh tố dưa lưới", price: 25000},
+                        {name: "Sinh tố đào", price: 25000}, {name: "Sinh tố vải", price: 25000},
+                        {name: "Sinh tố việt quất", price: 25000}, {name: "Sinh tố kiwi", price: 25000}
+                    ],
+                    "YAOURT SIZE 700ML": [
+                        {name: "Yaourt trái cây", price: 30000}, {name: "Yaourt việt quất", price: 25000},
+                        {name: "Yaourt dâu", price: 25000}, {name: "Yaourt xoài", price: 25000},
+                        {name: "Yaourt chanh dây", price: 25000}, {name: "Yaourt đào", price: 25000},
+                        {name: "Yaourt vải", price: 25000}, {name: "Yaourt kiwi", price: 25000},
+                        {name: "Yaourt ổi", price: 25000}, {name: "Yaourt thơm", price: 25000},
+                        {name: "Yaourt nho", price: 25000}, {name: "Yaourt dưa lưới", price: 25000}
+                    ]
+                },
+                toppings: [
+                    {name: "Bánh flan", price: 5000}, 
+                    {name: "Hạt đác", price: 5000},        
+                    {name: "Machiato", price: 10000}
+                ]
+            },
+            'shop2': {
+                name: 'Menu Quạo',
+                storageKey: 'quao_house_cart',
+                menu: {
+                    "TRÀ SỮA": [
+                        { name: "Trà sữa Wao", price: 25000 }, { name: "Trà sữa thái xanh", price: 25000 },
+                        { name: "Trà sữa khoai môn", price: 25000 }, { name: "Trà sữa matcha", price: 30000 },
+                        { name: "Trà sữa socola", price: 30000 }, { name: "Trà sữa dark socola", price: 32000 },
+                        { name: "Trà sữa hạt dẻ", price: 30000 }, { name: "Olong sữa quế hoa", price: 25000 },
+                        { name: "Trà sữa hạt đác", price: 22000 }, { name: "Trà sữa trân châu trắng", price: 20000 },
+                        { name: "Trà sữa trân châu đen", price: 20000 }, { name: "Trà sữa nguyên lá", price: 19000 }
+                    ],
+                    "TRÀ TRÁI CÂY": [
+                        { name: "Olong sen nhãn", price: 27000 }, { name: "Long nhãn quế hoa", price: 30000 },
+                        { name: "Trà việt quất", price: 25000 }, { name: "Trà mãng cầu", price: 25000 },
+                        { name: "Mãng cầu hibiscus", price: 30000 }, { name: "Trà hibiscus", price: 25000 },
+                        { name: "Trà lài đác thơm", price: 25000 }, { name: "Sen vàng macchiato", price: 30000 },
+                        { name: "Olong dâu tằm", price: 25000 }, { name: "Hồng trà dâu tây", price: 25000 },
+                        { name: "Hồng trà vải", price: 25000 }, { name: "Trà đào", price: 25000 },
+                        { name: "Trà đào hibiscus", price: 30000 }, { name: "Olong chanh leo", price: 25000 },
+                        { name: "Olong chanh bạc hà", price: 22000 }, { name: "Trà đào cam sả", price: 30000 },
+                        { name: "Hồng trà trân châu", price: 25000 }, { name: "Hồng trà hạt nổ", price: 25000 },
+                        { name: "Trà tắc xí muội", price: 20000 }
+                    ],
+                    "MATCHA": [
+                        { name: "Matcha latte", price: 25000 }, { name: "Sữa dâu matcha latte", price: 28000 },
+                        { name: "Việt quất matcha latte", price: 28000 }, { name: "Sữa dâu matcha kem chesse", price: 30000 }
+                    ],
+                    "KEM CHESSE": [
+                        { name: "Dâu sấy thăng hoa", price: 30000 }, { name: "Hồng trà kem cheese", price: 25000 },
+                        { name: "Trà sữa kem cheese", price: 25000 }, { name: "Olong sữa kem cheese", price: 25000 },
+                        { name: "Cacao kem cheese", price: 30000 }
+                    ],
+                    "YAOURT": [
+                        { name: "Yaourt đác thơm", price: 25000 }, { name: "Yaourt việt quất", price: 25000 },
+                        { name: "Yaourt dâu tây", price: 25000 }, { name: "Yaourt dâu tằm", price: 25000 },
+                        { name: "Yaourt chanh leo", price: 25000 }
+                    ],
+                    "SỮA TƯƠI ĐƯỜNG ĐEN": [
+                        { name: "Sữa tươi trân châu đường đen", price: 25000 }, { name: "Sữa tươi hạt đác đường đen", price: 25000 },
+                        { name: "Sữa tươi sương sáo đường đen", price: 25000 }
+                    ],
+                    "SODA": [
+                        { name: "Soda bạc hà", price: 20000 }, { name: "Soda blue", price: 20000 },
+                        { name: "Soda việt quất", price: 20000 }, { name: "Soda dâu tây", price: 20000 },
+                        { name: "Soda dâu tằm", price: 20000 }, { name: "Soda chanh leo", price: 20000 }
+                    ],
+                    "CAFE": [
+                        { name: "Cafe đen", price: 15000 }, { name: "Cafe sữa", price: 20000 },
+                        { name: "Cafe kem muối", price: 20000 }, { name: "Cafe blue kem cheese", price: 25000 },
+                        { name: "Bạc xỉu", price: 20000 }, { name: "Sữa tươi sương sáo cafe", price: 25000 },
+                        { name: "Bạc xỉu phô mai (bò cười)", price: 25000 }, { name: "Bạc xỉu kem cheese", price: 25000 },
+                        { name: "Cacao sữa", price: 20000 }, { name: "Cacao kem cheese", price: 25000 }
+                    ]
+                },
+                toppings: [
+                    { name: "Bánh flan", price: 5000 }, { name: "Trân châu trắng/đen", price: 5000 },
+                    { name: "Thạch quế hoa", price: 5000 }, { name: "Thạch trà", price: 5000 },
+                    { name: "Thạch vải", price: 5000 }, { name: "Hạt nổ củ năng", price: 8000 },
+                    { name: "Khúc bạch tầng", price: 7000 }, { name: "Phô mai tươi", price: 5000 },
+                    { name: "Thạch dừa sợi", price: 5000 }, { name: "Hạt đác", price: 8000 },
+                    { name: "Rau câu chân mèo", price: 6000 }, { name: "Sương sáo", price: 5000 }
+                ]
+            }
+        };
+
+        let currentShopId = 'shop1'; // Mặc định mở Quán 1
+        let currentOrder = [];
+        let activeItemIndex = null;
+
+        // --- HÀM CHUYỂN ĐỔI QUÁN ---
+        function switchShop(shopId) {
+            currentShopId = shopId;
+            const shop = shopsData[shopId];
+
+            // 1. Cập nhật giao diện Nút Tab
+            document.querySelectorAll('.shop-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + shopId).classList.add('active');
+
+            // 2. Cập nhật Tiêu đề Menu
+            document.getElementById('shop-title').innerText = shop.name;
+
+            // 3. Tải Giỏ hàng của quán tương ứng từ LocalStorage
+            currentOrder = JSON.parse(localStorage.getItem(shop.storageKey)) || [];
+
+            // 4. Render lại Menu và Giỏ hàng
+            renderCategorizedMenu();
+            renderOrder();
+        }
+
+        // --- CÁC HÀM XỬ LÝ CHUNG ---
+        function saveCartToStorage() {
+            localStorage.setItem(shopsData[currentShopId].storageKey, JSON.stringify(currentOrder));
+        }
+
+        function toggleBillModal(show) {
+            const modal = document.getElementById('bill-modal');
+            if (show) modal.classList.add('open'); else modal.classList.remove('open');
+        }
+
+        document.getElementById('bill-modal').addEventListener('click', function(e) {
+            if(e.target === this) toggleBillModal(false);
+        });
+        
+        function renderCategorizedMenu() {
+            const menuData = shopsData[currentShopId].menu;
+            let htmlContent = "";
+            for (let catName in menuData) {
+                htmlContent += `
+                    <div class="category-group">
+                        <div class="category-group-title">${catName}</div>
+                        <div class="items-grid">
+                            ${menuData[catName].map(item => `
+                                <div class="item-card" onclick="addToOrder('${item.name}',${item.price})">
+                                    <h4>${item.name}</h4><b>${item.price.toLocaleString()}đ</b>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('menu-scroll-view').innerHTML = htmlContent;
+        }
+
+        function addCustomItem() {
+            const name = prompt("Tên món ngoài menu:");
+            if (!name) return;
+            const price = parseInt(prompt("Giá tiền:"));
+            if (isNaN(price)) return;
+            addToOrder(name, price);
+        }
+
+        function addToOrder(name, price) {
+            currentOrder.push({ name, price, qty: 1, note: "", toppings: [], userTag: "", isPaid: false });
+            renderOrder();
+        }
+
+        function updateQty(index, delta) {
+            currentOrder[index].qty += delta;
+            if (currentOrder[index].qty <= 0) {
+                currentOrder.splice(index, 1);
+            }
+            renderOrder();
+        }
+
+        function updateNote(index, noteText) {
+            currentOrder[index].note = noteText;
+            saveCartToStorage();
+        }
+
+        function editItemPrice(index) {
+            const currentPrice = currentOrder[index].price;
+            let newPriceInput = prompt(`Nhập ĐƠN GIÁ mới cho "${currentOrder[index].name}" (Có thể nhập số như 30000 hoặc 30k):`, currentPrice);
+            
+            if (newPriceInput !== null) {
+                newPriceInput = newPriceInput.trim().toLowerCase();
+                let multiplier = 1;
+                
+                if (newPriceInput.endsWith('k')) {
+                    multiplier = 1000;
+                    newPriceInput = newPriceInput.replace('k', '');
+                }
+                
+                const parsedPrice = parseInt(newPriceInput.replace(/[^0-9]/g, ''));
+                if (!isNaN(parsedPrice)) {
+                    currentOrder[index].price = parsedPrice * multiplier; 
+                    saveCartToStorage();
+                    renderOrder(); 
+                }
+            }
+        }
+
+        function updateUserTag(index) {
+            const currentUser = currentOrder[index].userTag || "";
+            const user = prompt("Nhập tên người đặt món này:", currentUser);
+            if (user !== null) {
+                currentOrder[index].userTag = user.trim();
+                renderOrder();
+            }
+        }
+        
+        function toggleItemPaid(index, checked) {
+            currentOrder[index].isPaid = checked;
+            saveCartToStorage();
+            renderOrder();
+        }
+
+        function openToppingModal(index) {
+            activeItemIndex = index;
+            const item = currentOrder[index];
+            const currentToppings = shopsData[currentShopId].toppings; // Lấy topping của quán hiện tại
+            
+            document.getElementById('topping-modal-title').innerText = `Topping: ${item.name}`;
+            
+            document.getElementById('topping-options-list').innerHTML = currentToppings.map(t => {
+                const isChecked = item.toppings.find(x => x.name === t.name) ? 'checked' : '';
+                return `
+                    <div class="topping-option-row">
+                        <label>
+                            <input type="checkbox" ${isChecked} onchange="toggleToppingItem('${t.name}', ${t.price}, this.checked)">
+                            <span>${t.name}</span>
+                        </label>
+                        <span style="color:#64748b; font-size:15px;">+${t.price.toLocaleString()}đ</span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('topping-modal').classList.add('open');
+        }
+
+        function toggleToppingItem(name, price, isChecked) {
+            let item = currentOrder[activeItemIndex];
+            if (isChecked) {
+                item.toppings.push({ name, price });
+            } else {
+                item.toppings = item.toppings.filter(t => t.name !== name);
+            }
+            renderOrder();
+        }
+
+        function closeToppingModal() {
+            document.getElementById('topping-modal').classList.remove('open');
+        }
+
+        function renderOrder() {
+            saveCartToStorage();
+            const list = document.getElementById('order-list');
+            let total = 0;
+            let totalQty = 0;
+            let totalPaid = 0; 
+            
+            list.innerHTML = currentOrder.map((item, index) => {
+                let isPaid = item.isPaid || false;
+                
+                let singleToppingPrice = item.toppings.reduce((sum, t) => sum + t.price, 0);
+                let totalItemPrice = (item.price + singleToppingPrice) * item.qty;
+                
+                total += totalItemPrice;
+                totalQty += item.qty;
+                
+                if (isPaid) {
+                    totalPaid += totalItemPrice;
+                }
+
+                let toppingStr = "";
+                if (item.toppings.length > 0) {
+                    let namesWithPrice = item.toppings.map(t => `${t.name} (+${(t.price/1000)}k)`).join(', ');
+                    toppingStr = `<div class="topping-line">Kèm: <span class="topping-bold-text">${namesWithPrice}</span></div>`;
+                }
+
+                let userTagStr = "";
+                if (item.userTag) {
+                    userTagStr = `<div class="user-tag-line">Người đặt: <span class="user-tag-name">${item.userTag}</span></div>`;
+                }
+
+                return `
+                    <div class="order-item">
+                        <div class="item-main-row">
+                            <div class="item-info">
+                                <b class="item-name-title">${item.name}</b>
+                                
+                                <div class="action-buttons-row">
+                                    <button class="btn-add-top" onclick="openToppingModal(${index})">+ Topping</button>
+                                    <button class="btn-user-tag" onclick="updateUserTag(${index})">Người đặt</button>
+                                    
+                                    <label class="paid-checkbox-label ${isPaid ? 'paid' : 'unpaid'}">
+                                        <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="toggleItemPaid(${index}, this.checked)" style="accent-color: #27ae60; margin:0; cursor:pointer;">
+                                        ${isPaid ? 'Đã thu' : 'Chưa thu'}
+                                    </label>
+                                </div>
+
+                                <div class="sub-info-row">
+                                    <span class="static-price">${item.price.toLocaleString()}đ</span>
+                                    <input type="text" class="note-input" placeholder="(ghi chú...)" value="${item.note}" oninput="updateNote(${index}, this.value)">
+                                </div>
+                                ${userTagStr}
+                                ${toppingStr}
+                            </div>
+                            <div class="qty-controls">
+                                <button class="btn-qty" onclick="updateQty(${index}, -1)">-</button>
+                                <span style="font-weight:bold; font-size:15px; min-width:14px; text-align:center;">${item.qty}</span>
+                                <button class="btn-qty" onclick="updateQty(${index}, 1)">+</button>
+                            </div>
+                            <div class="item-total-price-box" onclick="editItemPrice(${index})" title="Bấm để sửa đơn giá món này">
+                                ${totalItemPrice.toLocaleString()} ✎
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+            
+            let totalRemain = total - totalPaid;
+
+            document.getElementById('total-price').innerText = total.toLocaleString() + 'đ';
+            document.getElementById('total-paid').innerText = '-' + totalPaid.toLocaleString() + 'đ';
+            document.getElementById('total-remain').innerText = totalRemain.toLocaleString() + 'đ';
+            
+            document.getElementById('total-paid-row').style.display = totalPaid > 0 ? 'flex' : 'none';
+            document.getElementById('cart-badge').innerText = totalQty;
+        }
+
+        async function downloadFullBill() {
+            if (currentOrder.length === 0) { alert("Bill trống!"); return; }
+            
+            const isPrintPrice = document.getElementById('toggle-print-price').checked;
+            const list = document.getElementById('order-list').cloneNode(true);
+            
+            const offscreenBill = document.createElement('div');
+            offscreenBill.style.width = "360px";
+            offscreenBill.style.background = "white";
+            offscreenBill.style.padding = "15px";
+            offscreenBill.style.position = "absolute";
+            offscreenBill.style.top = "-9999px";
+            
+            list.querySelectorAll('.order-item').forEach(itemDiv => {
+                itemDiv.style.padding = "8px 0"; 
+
+                const totalPriceBox = itemDiv.querySelector('.item-total-price-box');
+                const subInfo = itemDiv.querySelector('.sub-info-row');
+                const toppingLine = itemDiv.querySelector('.topping-line');
+
+                if (!isPrintPrice) {
+                    if (totalPriceBox) totalPriceBox.remove();
+                    if (subInfo) {
+                        const staticPrice = subInfo.querySelector('.static-price');
+                        if (staticPrice) staticPrice.remove();
+                    }
+                    if (toppingLine) {
+                        const boldText = toppingLine.querySelector('.topping-bold-text');
+                        if (boldText) {
+                            let text = boldText.innerText;
+                            text = text.replace(/\s*\(\+[0-9.]+k\)/g, '');
+                            boldText.innerText = text;
+                        }
+                    }
+                } else {
+                    if (totalPriceBox) {
+                        totalPriceBox.innerText = totalPriceBox.innerText.replace('✎', '').trim();
+                        totalPriceBox.style.background = 'transparent';
+                        totalPriceBox.style.color = '#1e293b';
+                    }
+                }
+
+                const ctrl = itemDiv.querySelector('.qty-controls');
+                if(ctrl) {
+                    const span = ctrl.querySelector('span').innerText;
+                    ctrl.innerHTML = `x${span}`;
+                    ctrl.style.color = "#333";
+                    ctrl.style.fontWeight = "bold";
+                    ctrl.style.fontSize = "16px";
+                }
+                
+                const actionRow = itemDiv.querySelector('.action-buttons-row');
+                if (actionRow) actionRow.remove();
+
+                const input = itemDiv.querySelector('.note-input');
+                const itemInfo = itemDiv.querySelector('.item-info');
+                if(input && itemInfo) {
+                    const noteText = input.value.trim();
+                    if(noteText) {
+                        const divNote = document.createElement('div');
+                        divNote.className = "note-display-line";
+                        divNote.innerText = `Ghi chú: ${noteText}`;
+                        itemInfo.appendChild(divNote);
+                    }
+                    input.remove();
+                }
+                
+                if(subInfo && !itemDiv.querySelector('.note-display-line')) {
+                    subInfo.style.marginTop = "0px";
+                }
+            });
+
+            const footer = document.createElement('div');
+            
+            if (isPrintPrice) {
+                const totalVal = document.getElementById('total-price').innerText;
+                footer.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; padding: 10px 0; font-size: 18px; font-weight:bold; border-top: 2px dashed #ccc; margin-top:10px; color:#333;">
+                        <span>TỔNG CỘNG:</span>
+                        <span style="color:#e67e22">${totalVal}</span>
+                    </div>
+                `;
+            } else {
+                footer.innerHTML = `
+                    <div style="display:flex; justify-content:center; padding: 10px 0; font-size: 14px; font-style:italic; border-top: 1px dashed #ccc; margin-top:10px; color:#666;">
+                    </div>
+                `;
+            }
+
+            offscreenBill.appendChild(list);
+            offscreenBill.appendChild(footer);
+            document.body.appendChild(offscreenBill);
+
+            try {
+                const canvas = await html2canvas(offscreenBill, { scale: 2, useCORS: true });
+                const link = document.createElement('a');
+                link.download = `Bill_${shopsData[currentShopId].name}_${Date.now()}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            } catch (err) {
+                alert("Lỗi chụp ảnh: " + err);
+            } finally {
+                document.body.removeChild(offscreenBill);
+            }
+        }
+
+        function clearAll() { 
+            if(confirm(`Xóa toàn bộ đơn hiện tại của ${shopsData[currentShopId].name}?`)) { 
+                currentOrder = []; 
+                renderOrder(); 
+                toggleBillModal(false); 
+            } 
+        }
+
+        // --- KHỞI CHẠY APP ---
+        switchShop('shop1'); 
+
+    </script>
+</body>
+</html>
