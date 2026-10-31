@@ -31,7 +31,7 @@
         overflow: auto !important;
     }
 
-    /* CSS Cho Tab Chọn Quán */
+    /* CSS Cho Tab Chọn Quán (Có thể lướt ngang) */
     .shop-selector {
         display: flex;
         gap: 6px;
@@ -39,11 +39,14 @@
         background: #fff;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         overflow-x: auto;
+        white-space: nowrap;
     }
     
+    .shop-selector::-webkit-scrollbar { display: none; }
+
     .shop-btn {
-        flex: 1;
-        padding: 10px 4px;
+        flex: 0 0 auto;
+        padding: 10px 14px;
         border: none;
         border-radius: 10px;
         background: #f1f5f9;
@@ -54,7 +57,6 @@
         transition: all 0.25s ease;
         text-transform: uppercase;
         box-shadow: inset 0 0 0 1px #e2e8f0;
-        min-width: 100px;
     }
     
     .shop-btn.active {
@@ -63,8 +65,6 @@
         box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         transform: translateY(-2px);
     }
-    
-    .shop-selector::-webkit-scrollbar { display: none; }
 
     .menu-section { 
         flex: 1; 
@@ -385,8 +385,10 @@
     <!-- Tab Chọn Quán -->
     <div class="shop-selector">
         <button id="btn-shop1" class="shop-btn active" onclick="switchShop('shop1')">QUÁN 1</button>
-        <button id="btn-shop2" class="shop-btn" onclick="switchShop('shop2')">MENU 2 LƯ</button>
-        <button id="btn-shop3" class="shop-btn" onclick="switchShop('shop3')">CHÈ Ý ƠI</button>
+        <button id="btn-shop2" class="shop-btn" onclick="switchShop('shop2')">MENU QUẠO</button>
+        <button id="btn-shop3" class="shop-btn" onclick="switchShop('shop3')">MENU 2 LƯ</button>
+        <button id="btn-shop4" class="shop-btn" onclick="switchShop('shop4')">CHÈ Ý ƠI</button>
+        <button id="btn-shop5" class="shop-btn" onclick="switchShop('shop5')">DOREMON</button>
     </div>
 
     <div class="menu-section">
@@ -459,11 +461,11 @@
     </div>
 
     <script>
-        // --- DỮ LIỆU CỦA 3 QUÁN ---
+        // --- DỮ LIỆU CỦA 5 QUÁN ---
         const shopsData = {
             'shop1': {
                 name: 'Menu Quán 1',
-                storageKey: 'tra_sua_cart_q1', // Đã thiết lập Key riêng
+                storageKey: 'tra_sua_cart_q1', 
                 menu: {
                     "TRÀ SỮA SỐT MÔN": [
                         {name: "Trà sữa sốt khoai môn", price: 33000}, {name: "Olong sốt môn", price: 33000},
@@ -531,8 +533,73 @@
             },
             
             'shop2': {
+                name: 'Menu Quạo',
+                storageKey: 'quao_house_cart_q2', 
+                menu: {
+                    "TRÀ SỮA": [
+                        { name: "Trà sữa Wao", price: 25000 }, { name: "Trà sữa thái xanh", price: 25000 },
+                        { name: "Trà sữa khoai môn", price: 25000 }, { name: "Trà sữa matcha", price: 30000 },
+                        { name: "Trà sữa socola", price: 30000 }, { name: "Trà sữa dark socola", price: 32000 },
+                        { name: "Trà sữa hạt dẻ", price: 30000 }, { name: "Olong sữa quế hoa", price: 25000 },
+                        { name: "Trà sữa hạt đác", price: 22000 }, { name: "Trà sữa trân châu trắng", price: 20000 },
+                        { name: "Trà sữa trân châu đen", price: 20000 }, { name: "Trà sữa nguyên lá", price: 19000 }
+                    ],
+                    "TRÀ TRÁI CÂY": [
+                        { name: "Olong sen nhãn", price: 27000 }, { name: "Long nhãn quế hoa", price: 30000 },
+                        { name: "Trà việt quất", price: 25000 }, { name: "Trà mãng cầu", price: 25000 },
+                        { name: "Mãng cầu hibiscus", price: 30000 }, { name: "Trà hibiscus", price: 25000 },
+                        { name: "Trà lài đác thơm", price: 25000 }, { name: "Sen vàng macchiato", price: 30000 },
+                        { name: "Olong dâu tằm", price: 25000 }, { name: "Hồng trà dâu tây", price: 25000 },
+                        { name: "Hồng trà vải", price: 25000 }, { name: "Trà đào", price: 25000 },
+                        { name: "Trà đào hibiscus", price: 30000 }, { name: "Olong chanh leo", price: 25000 },
+                        { name: "Olong chanh bạc hà", price: 22000 }, { name: "Trà đào cam sả", price: 30000 },
+                        { name: "Hồng trà trân châu", price: 25000 }, { name: "Hồng trà hạt nổ", price: 25000 },
+                        { name: "Trà tắc xí muội", price: 20000 }
+                    ],
+                    "MATCHA": [
+                        { name: "Matcha latte", price: 25000 }, { name: "Sữa dâu matcha latte", price: 28000 },
+                        { name: "Việt quất matcha latte", price: 28000 }, { name: "Sữa dâu matcha kem chesse", price: 30000 }
+                    ],
+                    "KEM CHESSE": [
+                        { name: "Dâu sấy thăng hoa", price: 30000 }, { name: "Hồng trà kem cheese", price: 25000 },
+                        { name: "Trà sữa kem cheese", price: 25000 }, { name: "Olong sữa kem cheese", price: 25000 },
+                        { name: "Cacao kem cheese", price: 30000 }
+                    ],
+                    "YAOURT": [
+                        { name: "Yaourt đác thơm", price: 25000 }, { name: "Yaourt việt quất", price: 25000 },
+                        { name: "Yaourt dâu tây", price: 25000 }, { name: "Yaourt dâu tằm", price: 25000 },
+                        { name: "Yaourt chanh leo", price: 25000 }
+                    ],
+                    "SỮA TƯƠI ĐƯỜNG ĐEN": [
+                        { name: "Sữa tươi trân châu đường đen", price: 25000 }, { name: "Sữa tươi hạt đác đường đen", price: 25000 },
+                        { name: "Sữa tươi sương sáo đường đen", price: 25000 }
+                    ],
+                    "SODA": [
+                        { name: "Soda bạc hà", price: 20000 }, { name: "Soda blue", price: 20000 },
+                        { name: "Soda việt quất", price: 20000 }, { name: "Soda dâu tây", price: 20000 },
+                        { name: "Soda dâu tằm", price: 20000 }, { name: "Soda chanh leo", price: 20000 }
+                    ],
+                    "CAFE": [
+                        { name: "Cafe đen", price: 15000 }, { name: "Cafe sữa", price: 20000 },
+                        { name: "Cafe kem muối", price: 20000 }, { name: "Cafe blue kem cheese", price: 25000 },
+                        { name: "Bạc xỉu", price: 20000 }, { name: "Sữa tươi sương sáo cafe", price: 25000 },
+                        { name: "Bạc xỉu phô mai (bò cười)", price: 25000 }, { name: "Bạc xỉu kem cheese", price: 25000 },
+                        { name: "Cacao sữa", price: 20000 }, { name: "Cacao kem cheese", price: 25000 }
+                    ]
+                },
+                toppings: [
+                    { name: "Bánh flan", price: 5000 }, { name: "Trân châu trắng/đen", price: 5000 },
+                    { name: "Thạch quế hoa", price: 5000 }, { name: "Thạch trà", price: 5000 },
+                    { name: "Thạch vải", price: 5000 }, { name: "Hạt nổ củ năng", price: 8000 },
+                    { name: "Khúc bạch tầng", price: 7000 }, { name: "Phô mai tươi", price: 5000 },
+                    { name: "Thạch dừa sợi", price: 5000 }, { name: "Hạt đác", price: 8000 },
+                    { name: "Rau câu chân mèo", price: 6000 }, { name: "Sương sáo", price: 5000 }
+                ]
+            },
+
+            'shop3': {
                 name: 'Menu 2 Lư',
-                storageKey: 'quao_house_cart_q2', // Đã thiết lập Key riêng
+                storageKey: 'menu_2_lu_cart_q3', 
                 menu: {
                     "BEST SELLER": [
                         { name: "Trà sữa truyền thống", price: 25000 }, { name: "Sữa môn Đài Loan", price: 25000 },
@@ -593,9 +660,9 @@
                 ]
             },
 
-            'shop3': {
+            'shop4': {
                 name: 'Tiệm Chè Ý ƠI',
-                storageKey: 'che_y_oi_cart_q3', // Đã thiết lập Key riêng
+                storageKey: 'che_y_oi_cart_q4', 
                 menu: {
                     "CHÈ": [
                         { name: "Dừa nước dầm củ năng", price: 25000 }, { name: "Thốt nốt dầm củ năng", price: 25000 },
@@ -627,10 +694,54 @@
                     { name: "Thêm thốt nốt", price: 5000 }, { name: "Thêm dừa nước", price: 5000 },
                     { name: "Thêm củ năng", price: 5000 }, { name: "Bánh flan", price: 5000 }
                 ]
+            },
+
+            'shop5': {
+                name: 'Quán Doremon',
+                storageKey: 'doremon_cart_q5', 
+                menu: {
+                    "CÀ PHÊ PHA MÁY": [
+                        {name: "Cà phê đen", price: 13000}, {name: "Cà phê sữa", price: 15000}, {name: "Bạc xỉu", price: 17000}
+                    ],
+                    "SINH TỐ": [
+                        {name: "Sinh tố bơ", price: 25000}, {name: "Sinh tố bơ sầu riêng", price: 30000},
+                        {name: "Sinh tố dâu", price: 25000}, {name: "Sinh tố sầu riêng", price: 25000},
+                        {name: "Sinh tố dừa", price: 20000}, {name: "Sinh tố mãng cầu", price: 25000},
+                        {name: "Sinh tố sapoche", price: 20000}
+                    ],
+                    "NƯỚC ÉP": [
+                        {name: "Ép khóm", price: 15000}, {name: "Ép cà rốt", price: 20000},
+                        {name: "Ép lê", price: 25000}, {name: "Ép táo", price: 25000},
+                        {name: "Ép dưa hấu", price: 20000}, {name: "Nước ép mix", price: 25000}
+                    ],
+                    "NƯỚC MÍA & GIẢI KHÁT KHÁC": [
+                        {name: "Nước mía thơm tắc", price: 10000}, {name: "Nước mía sầu riêng", price: 15000},
+                        {name: "Nước mía fulltopping", price: 15000}, {name: "Nước mía lít", price: 15000},
+                        {name: "Cam ép", price: 15000}, {name: "Cam sữa", price: 18000},
+                        {name: "Dừa tắc", price: 10000}, {name: "Dừa fulltopping", price: 15000},
+                        {name: "Rau má nước dừa", price: 10000}, {name: "Rau má sữa", price: 15000}
+                    ],
+                    "ĐỒNG GIÁ 20K & ĐẶC BIỆT": [
+                        {name: "Trà tắc thái xanh", price: 20000}, {name: "Trà tắc xí muội", price: 20000},
+                        {name: "Trà dâu tây dầm", price: 20000}, {name: "Trà đào", price: 20000},
+                        {name: "Trà việt quất", price: 20000}, {name: "Soda dâu", price: 20000},
+                        {name: "Soda việt quất", price: 20000}, {name: "Soda đào", price: 20000},
+                        {name: "Yaourt đá", price: 20000}, {name: "Yaourt việt quất", price: 20000},
+                        {name: "Yaourt dâu", price: 20000}, {name: "Yaourt đào", price: 20000},
+                        {name: "Latte dâu", price: 20000}, {name: "Latte đào", price: 20000},
+                        {name: "Latte việt quất", price: 20000}, {name: "Matcha latte", price: 20000},
+                        {name: "Matcha latte đào", price: 20000}, {name: "Matcha latte dâu", price: 20000},
+                        {name: "Matcha latte việt quất", price: 20000}, {name: "Đặc biệt trái cây tô", price: 25000}
+                    ]
+                },
+                toppings: [
+                    { name: "Thêm sữa", price: 5000 }, { name: "Thêm sầu riêng", price: 10000 },
+                    { name: "Thêm trân châu", price: 5000 }, { name: "Thêm trái cây", price: 5000 }
+                ]
             }
         };
 
-        const LAST_SHOP_KEY = 'last_visited_shop'; // Key để lưu lại quán bạn truy cập cuối cùng
+        const LAST_SHOP_KEY = 'last_visited_shop'; 
         
         let currentShopId = 'shop1'; 
         let currentOrder = [];
@@ -647,6 +758,10 @@
             // 1. Cập nhật giao diện Nút Tab
             document.querySelectorAll('.shop-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-' + shopId).classList.add('active');
+
+            // Cập nhật vị trí cuộn thanh tab (Giúp hiển thị nút Quán 5 nếu bị che)
+            const tabButton = document.getElementById('btn-' + shopId);
+            tabButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
             // 2. Cập nhật Tiêu đề Menu
             document.getElementById('shop-title').innerText = shop.name;
@@ -760,7 +875,6 @@
             activeItemIndex = index;
             const item = currentOrder[index];
             
-            // Vì giỏ hàng đã được tách riêng theo quán, chỉ cần lấy chính xác topping của quán hiện tại
             const currentToppings = shopsData[currentShopId].toppings; 
             
             document.getElementById('topping-modal-title').innerText = `Topping: ${item.name}`;
@@ -967,7 +1081,6 @@
             try {
                 const canvas = await html2canvas(offscreenBill, { scale: 2, useCORS: true });
                 const link = document.createElement('a');
-                // Lưu tên Bill ứng với tên Quán
                 link.download = `Bill_${shopsData[currentShopId].name}_${Date.now()}.png`;
                 link.href = canvas.toDataURL("image/png");
                 link.click();
@@ -987,7 +1100,6 @@
         }
 
         // --- KHỞI CHẠY APP ---
-        // Đọc lại quán vừa truy cập, nếu không có hoặc dữ liệu quán bị lỗi thì quay về mặc định 'shop1'
         let savedShop = localStorage.getItem(LAST_SHOP_KEY);
         if (!savedShop || !shopsData[savedShop]) {
             savedShop = 'shop1';
