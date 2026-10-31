@@ -280,6 +280,7 @@ const shopsData = {
             { name: "Thêm trân châu", price: 5000 }, { name: "Thêm trái cây", price: 5000 }
         ]
     },
+
     'shop6': {
         name: 'SOLI TEA',
         phone: '0702908585', 
@@ -331,19 +332,150 @@ const shopsData = {
             ]
         },
         toppings: [
-            { name: "Trân châu đen", price: 3000 },
-            { name: "Thạch Aiyu", price: 3000 },
-            { name: "Sương sáo", price: 3000 },
-            { name: "Trân châu Olong", price: 5000 },
-            { name: "Trân châu giòn 3Q", price: 5000 },
-            { name: "Thạch cà phê", price: 5000 },
-            { name: "Phô mai tươi", price: 5000 },
-            { name: "Bánh plan", price: 6000 },
-            { name: "Kem Cheese", price: 8000 },
-            { name: "Hạt đác", price: 8000 },
-            { name: "Trái cây thêm (Vải/Đào/Nhãn/Sen)", price: 8000 },
-            { name: "Phô mai viên (5 viên)", price: 10000 },
+            { name: "Trân châu đen", price: 3000 }, { name: "Thạch Aiyu", price: 3000 },
+            { name: "Sương sáo", price: 3000 }, { name: "Trân châu Olong", price: 5000 },
+            { name: "Trân châu giòn 3Q", price: 5000 }, { name: "Thạch cà phê", price: 5000 },
+            { name: "Phô mai tươi", price: 5000 }, { name: "Bánh plan", price: 6000 },
+            { name: "Kem Cheese", price: 8000 }, { name: "Hạt đác", price: 8000 },
+            { name: "Trái cây thêm (Vải/Đào/Nhãn/Sen)", price: 8000 }, { name: "Phô mai viên (5 viên)", price: 10000 },
             { name: "Full Topping", price: 10000 }
+        ]
+    },
+
+    'shop7': {
+        name: 'TÀI BÉO TEA',
+        phone: '0946205907', 
+        storageKey: 'tai_beo_tea_cart_q7', 
+        menu: {
+            "THỨC UỐNG ĐẶC BIỆT": [
+                { name: "Sữa Tươi Trân Châu Đường Đen", price: 25000 },
+                { name: "CaCao Trân Châu Đường Đen", price: 28000 },
+                { name: "Matcha Trân Châu Đường Đen", price: 28000 },
+                { name: "Khoai Lang Tím Latte Trân Châu", price: 28000 },
+                { name: "Sữa Chua Dẻo Tài Béo", price: 28000 },
+                { name: "Plan Mix", price: 28000 },
+                { name: "Olong Trân Châu Đường Đen", price: 30000 },
+                { name: "Trà Sữa Tài Béo Đặc Biệt (Topping Đầy Đủ, Plan)", price: 33000 },
+                { name: "Milo Dầm", price: 33000 },
+                { name: "Trà Sữa Nướng", price: 35000 },
+                { name: "Matcha Latte", price: 35000 },
+                { name: "Chè Khúc Bạch Trái Cây", price: 35000 }
+            ],
+            "TRÀ SỮA": [
+                { name: "Trà Sữa Truyền Thống", price: 20000 },
+                { name: "Trà Sữa Thái Xanh", price: 20000 },
+                { name: "Trà Sữa Olong", price: 23000 },
+                { name: "Trà Sữa Gạo", price: 25000 },
+                { name: "Trà Sữa Chocolate", price: 25000 },
+                { name: "Trà Sữa Matcha", price: 25000 },
+                { name: "Trà Sữa Olong Bạc Hà", price: 25000 },
+                { name: "Trà Sữa Dâu", price: 25000 },
+                { name: "Trà Sữa Việt Quất", price: 25000 },
+                { name: "Trà Sữa Dưa Lưới", price: 25000 },
+                { name: "Trà Sữa Bơ Tươi", price: 25000 },
+                { name: "Trà Sữa Khoai Môn (Trân Châu Trắng, Khoai Dẻo, Pudding, Khoai Phô Mai)", price: 35000 },
+                { name: "Trà Sữa Hạnh Nhân (Trân Châu Trắng, Trân Châu Phô Mai, Plan)", price: 35000 },
+                { name: "Trà Sữa Siêu Phô Mai (Trân Châu Phô Mai, Phô Mai Tươi, Phô Mai Mặn, Khoai Phô Mai)", price: 35000 },
+                { name: "Trà Sữa Sốt Phô Mai Mặn (Khoai Phô Mai, Pudding Trứng, Trân Châu Đường Đen)", price: 35000 },
+                { name: "Trà Sữa Olong Đậm Vị (Trân Châu Cốm Hoặc Trân Châu Olong)", price: 35000 },
+                { name: "Trà Sữa Mây (Trân Châu Trắng, Sương Sáo, Kem Mây)", price: 35000 },
+                { name: "Thái Xanh Phô Mai", price: 35000 }
+            ],
+            "TRÀ TRÁI CÂY": [
+                { name: "Trà Thạch Đào", price: 20000 },
+                { name: "Trà Thạch Vải", price: 20000 },
+                { name: "Trà Dâu", price: 25000 },
+                { name: "Trà Việt Quất", price: 25000 },
+                { name: "Trà Kiwi", price: 25000 },
+                { name: "Trà Táo Hạt Chia", price: 25000 },
+                { name: "Trà Đào Cam Sả", price: 28000 },
+                { name: "Trà Đào Cam Nhài", price: 28000 },
+                { name: "Trà Lài Đác Thơm", price: 28000 },
+                { name: "Trà Vải Ngọc Bích", price: 28000 },
+                { name: "Trà Bưởi Hồng", price: 28000 },
+                { name: "Trà Lài Ổi Hồng", price: 30000 },
+                { name: "Trà Mãng Cầu Hạt Đác", price: 30000 },
+                { name: "Trà Hoa Nhài Sen Nhãn", price: 30000 },
+                { name: "Sen Dừa Củ Năng", price: 30000 },
+                { name: "Trà Quýt Chôm Chôm", price: 33000 },
+                { name: "Trà Hoa Quả Nhiệt Đới", price: 33000 },
+                { name: "Trà Dưa Lưới (Sữa Chua, Thạch Dừa, Trân Châu Trắng, Pudding Dưa Lưới)", price: 35000 },
+                { name: "Trà Xoài Hawai", price: 35000 },
+                { name: "Trà Tuyết Mơ Sơ Ri", price: 35000 },
+                { name: "Trà Tuyết Phúc Bồn Tử", price: 35000 }
+            ],
+            "HỒNG TRÀ": [
+                { name: "Hồng Trà Bí Đao", price: 15000 },
+                { name: "Hồng Trà Trân Châu", price: 15000 },
+                { name: "Hồng Trà Tắc", price: 18000 },
+                { name: "Hồng Trà Tài Béo (1 Lít - Đủ Thạch)", price: 30000 },
+                { name: "Hồng Trà Latte Bắp Rang", price: 35000 }
+            ],
+            "SODA Ý": [
+                { name: "Soda Dâu", price: 25000 },
+                { name: "Soda Đào", price: 25000 },
+                { name: "Soda Kiwi", price: 25000 },
+                { name: "Soda Chanh", price: 25000 },
+                { name: "Soda Việt Quất", price: 25000 },
+                { name: "Soda Blue Ocean", price: 25000 }
+            ],
+            "ĐÁ XAY": [
+                { name: "Matcha Đá Xay", price: 35000 },
+                { name: "Chocolate Đá Xay", price: 35000 },
+                { name: "Chanh Tuyết Đá Xay", price: 35000 },
+                { name: "Chanh Dây Đá Xay", price: 35000 },
+                { name: "Việt Quất Đá Xay", price: 35000 },
+                { name: "Dâu Đá Xay", price: 35000 },
+                { name: "Vải Đá Xay", price: 35000 },
+                { name: "Khoai Lang Tím Cốt Dừa Đá Xay", price: 38000 },
+                { name: "Cà Phê Cốt Dừa Đá Xay", price: 38000 },
+                { name: "Dâu Thơm Cam Đá Xay", price: 38000 },
+                { name: "Galaxy Đá Xay", price: 38000 },
+                { name: "Sữa Chua Cherry Hạt Đác Đá Xay", price: 38000 }
+            ],
+            "CÀ PHÊ": [
+                { name: "Cà Phê Đen", price: 20000 },
+                { name: "Cà Phê Sữa", price: 25000 },
+                { name: "Cà Phê Sữa Tươi", price: 25000 },
+                { name: "CaCao Cà Phê", price: 33000 }
+            ],
+            "MACHIATO": [
+                { name: "Olong Tài Béo Machiato", price: 35000 },
+                { name: "Than Tre Machiato", price: 35000 },
+                { name: "Matcha Machiato", price: 35000 },
+                { name: "Socholate Machiato", price: 35000 },
+                { name: "Trà Sen Latte Củ Năng", price: 35000 },
+                { name: "Hoa Đậu Biếc Machiato", price: 35000 },
+                { name: "Trà Xoài Machiato", price: 35000 }
+            ]
+        },
+        toppings: [
+            { name: "Trân Châu Phô Mai (2 Viên)", price: 5000 },
+            { name: "Trân Châu Trắng", price: 5000 },
+            { name: "Thạch Củ Năng", price: 5000 },
+            { name: "Hạt Đác", price: 5000 },
+            { name: "Khoai Dẻo", price: 5000 },
+            { name: "Rau Câu Phô Mai", price: 5000 },
+            { name: "Sợi Bưởi", price: 5000 },
+            { name: "Thạch Dừa", price: 5000 },
+            { name: "Sương Sáo", price: 5000 },
+            { name: "Thạch Đào", price: 6000 },
+            { name: "Thạch Vải", price: 6000 },
+            { name: "Khoai Dẻo Phô Mai (2 Viên)", price: 6000 },
+            { name: "Chân Mèo", price: 6000 },
+            { name: "Bánh Plan", price: 7000 },
+            { name: "Tom And Jerry", price: 7000 },
+            { name: "Pudding Trứng/Choco/Lưới/Khoai Môn", price: 8000 },
+            { name: "Khúc Bạch", price: 8000 },
+            { name: "Thạch Phô Mai Tươi", price: 8000 },
+            { name: "Trân Châu Cốm", price: 8000 },
+            { name: "Trân Châu Hoàng Kim", price: 8000 },
+            { name: "Sốt Machiato", price: 8000 },
+            { name: "Trân Châu Đường Đen", price: 8000 },
+            { name: "Thạch Nổ Củ Năng", price: 8000 },
+            { name: "Thạch Đầy Đủ", price: 10000 },
+            { name: "Panna Cotta", price: 23000 },
+            { name: "Up Size", price: 8000 }
         ]
     }
 };
