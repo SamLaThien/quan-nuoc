@@ -280,4 +280,70 @@ const shopsData = {
                     { name: "Thêm trân châu", price: 5000 }, { name: "Thêm trái cây", price: 5000 }
                 ]
             }
+             'shop6': {
+        name: 'SOLI TEA',
+        phone: '0702908585', // Số lấy từ hình ảnh
+        storageKey: 'soli_tea_cart_q6', 
+        menu: {
+            "OLONG THƯỢNG HẠNG": [
+                { name: "Olong sữa (Size M)", price: 19000 }, { name: "Olong sữa (Size L)", price: 22000 },
+                { name: "Tấm gạo (Size M)", price: 19000 }, { name: "Tấm gạo (Size L)", price: 22000 },
+                { name: "Khói B'Lao (Size M)", price: 19000 }, { name: "Khói B'Lao (Size L)", price: 22000 },
+                { name: "Olong nhài sữa (Size M)", price: 22000 }, { name: "Olong nhài sữa (Size L)", price: 25000 },
+                { name: "Olong sữa dừa (Size M)", price: 22000 }, { name: "Olong sữa dừa (Size L)", price: 25000 },
+                { name: "Olong hạnh nhân (Size M)", price: 22000 }, { name: "Olong hạnh nhân (Size L)", price: 25000 },
+                { name: "Olong hạt phỉ (Size M)", price: 22000 }, { name: "Olong hạt phỉ (Size L)", price: 25000 },
+                { name: "Olong xanh (Size M)", price: 22000 }, { name: "Olong xanh (Size L)", price: 25000 }
+            ],
+            "TRÀ SỮA ĐẬM VỊ": [
+                { name: "Phúc long (Size M)", price: 19000 }, { name: "Phúc long (Size L)", price: 22000 },
+                { name: "Nguyên lá ủ (Size M)", price: 19000 }, { name: "Nguyên lá ủ (Size L)", price: 22000 },
+                { name: "Hạnh nhân nguyên lá (Size M)", price: 22000 }, { name: "Hạnh nhân nguyên lá (Size L)", price: 25000 },
+                { name: "Matcha Okinawa (Size M)", price: 22000 }, { name: "Matcha Okinawa (Size L)", price: 25000 }
+            ],
+            "TRÀ TRÁI CÂY": [
+                { name: "Vải dầm Aiyu", price: 20000 },
+                { name: "Thanh trà phúc bồn tử", price: 20000 },
+                { name: "Lài đác thơm", price: 28000 },
+                { name: "Vải Lài", price: 28000 },
+                { name: "Vải Sen", price: 28000 },
+                { name: "Vải Olong", price: 28000 },
+                { name: "Lucky Tea", price: 28000 },
+                { name: "Đào cam dâu", price: 28000 },
+                { name: "Sen long nhãn", price: 28000 },
+                { name: "Olong mãng cầu", price: 28000 }
+            ],
+            "CREAMY": [
+                { name: "Olong kem phô mai", price: 22000 },
+                { name: "Olong rang kem phô mai", price: 25000 },
+                { name: "Gạo sen kem phô mai", price: 25000 },
+                { name: "Trà xoài Machiato", price: 27000 }
+            ],
+            "FRESH (SỮA & TRÀ)": [
+                { name: "Trà bí đao sương sáo", price: 18000 },
+                { name: "Sữa tươi trân châu", price: 22000 },
+                { name: "Sữa dừa sương sáo", price: 25000 },
+                { name: "Phindi hạnh nhân", price: 25000 }
+            ],
+            "CÀ PHÊ": [
+                { name: "Cà phê đá", price: 12000 },
+                { name: "Cà phê sữa đá", price: 15000 }
+            ]
+        },
+        toppings: [
+            { name: "Trân châu đen", price: 3000 },
+            { name: "Thạch Aiyu", price: 3000 },
+            { name: "Sương sáo", price: 3000 },
+            { name: "Trân châu Olong", price: 5000 },
+            { name: "Trân châu giòn 3Q", price: 5000 },
+            { name: "Thạch cà phê", price: 5000 },
+            { name: "Phô mai tươi", price: 5000 },
+            { name: "Bánh plan", price: 6000 },
+            { name: "Kem Cheese", price: 8000 },
+            { name: "Hạt đác", price: 8000 },
+            { name: "Trái cây thêm (Vải/Đào/Nhãn/Sen)", price: 8000 },
+            { name: "Phô mai viên (5 viên)", price: 10000 },
+            { name: "Full Topping", price: 10000 }
+        ]
+}
         };
