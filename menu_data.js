@@ -1,7 +1,7 @@
 const shopsData = {
             'shop1': {
-                name: 'Quán 1',
-                phone: '0340918653', // Tạm gán số trên cùng
+                name: 'Tuyền Bé',
+                phone: '0382838382', // Tạm gán số trên cùng
                 storageKey: 'tra_sua_cart_q1', 
                 menu: {
                     "TRÀ SỮA SỐT MÔN": [
@@ -71,7 +71,7 @@ const shopsData = {
             
             'shop2': {
                 name: 'Menu Quạo',
-                phone: '0388288382', // Tên Tuyết trong ảnh
+                phone: '0349918653', // Tên Tuyết trong ảnh
                 storageKey: 'quao_house_cart_q2', 
                 menu: {
                     "TRÀ SỮA": [
@@ -137,7 +137,7 @@ const shopsData = {
 
             'shop3': {
                 name: 'Menu 2 Lư',
-                phone: '', // Để trống nếu không có số Zalo
+                phone: '0976967213', // Để trống nếu không có số Zalo
                 storageKey: 'menu_2_lu_cart_q3', 
                 menu: {
                     "BEST SELLER": [
@@ -200,7 +200,7 @@ const shopsData = {
             },
 
             'shop4': {
-                name: 'Tiệm Chè Ý ƠI',
+                name: 'TiệChè Ý ƠI',
                 phone: '0789529067', // Ký hiệu Y trong ảnh
                 storageKey: 'che_y_oi_cart_q4', 
                 menu: {
