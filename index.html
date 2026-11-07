@@ -1482,7 +1482,7 @@
                     : '';
 
                 let userTagStr = item.userTag
-                    ? `<div class="user-tag-line">👤Người đăt: <span class="user-tag-name">${item.userTag}</span></div>`
+                    ? `<div class="user-tag-line">👤Người đặt: <span class="user-tag-name">${item.userTag}</span></div>`
                     : '';
 
                 return `
@@ -1647,8 +1647,8 @@
                         <div>
                             <b>${i + 1}. ${item.name}</b> x${item.qty}
                             ${item.toppings.length ? `<div style="font-size: 11px; color: #e67e22;">+ Topping: ${item.toppings.map(t => t.name).join(', ')}</div>` : ''}
-                            ${item.note ? `<div style="font-size: 11px; color: #666;">📝 ${item.note}</div>` : ''}
-                            ${item.userTag ? `<div style="font-size: 11px; color: #0984e3;">👤 ${item.userTag}</div>` : ''}
+                            ${item.note ? `<div style="font-size: 11px; color: #666;">📝Ghi chú: ${item.note}</div>` : ''}
+                            ${item.userTag ? `<div style="font-size: 11px; color: #0984e3;">👤Người đặt: ${item.userTag}</div>` : ''}
                         </div>
                         ${showPrice ? `<span style="font-weight: bold;">${itemTotal.toLocaleString('vi-VN')}đ</span>` : ''}
                     </div>
