@@ -1482,7 +1482,7 @@
                     : '';
 
                 let userTagStr = item.userTag
-                    ? `<div class="user-tag-line">👤 Cho: <span class="user-tag-name">${item.userTag}</span></div>`
+                    ? `<div class="user-tag-line">👤Người đăt: <span class="user-tag-name">${item.userTag}</span></div>`
                     : '';
 
                 return `
@@ -1656,10 +1656,6 @@
             });
 
             temp.innerHTML = `
-                <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
-                    <h2 style="margin:0;">${shop.name}</h2>
-                    <div style="font-size: 12px; color: #666;">CHI TIẾT ĐƠN HÀNG</div>
-                </div>
                 ${itemsHTML}
                 ${showPrice ? `
                     <div style="margin-top: 15px; border-top: 2px solid #000; padding-top: 5px; display: flex; justify-content: space-between; font-size: 16px; font-weight: bold;">
